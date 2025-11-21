@@ -1,0 +1,35 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: notification-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql.isbank.svc.cluster.local:3306/greenbank_notification?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: ${MYSQL_PASSWORD:Zmzzmz010627!}
+    initialization-mode: always
+    schema: classpath:schema.sql
+    continue-on-error: false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server.isbank.svc.cluster.local:8761/eureka/
+  instance:
+    prefer-ip-address: false
+    hostname: ${HOSTNAME}
+    instance-id: ${HOSTNAME}:${spring.application.name}:${server.port}
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+
+knife4j:
+  enable: true
+

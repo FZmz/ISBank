@@ -1,0 +1,42 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: transfer-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql.isbank.svc.cluster.local:3306/greenbank_transfer?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: ${MYSQL_PASSWORD:Zmzzmz010627!}
+    initialization-mode: always
+    schema: classpath:schema.sql
+    continue-on-error: false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server.isbank.svc.cluster.local:8761/eureka/
+  instance:
+    prefer-ip-address: false
+    hostname: ${HOSTNAME}
+    instance-id: ${HOSTNAME}:${spring.application.name}:${server.port}
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+
+knife4j:
+  enable: true
+
+# 其他服务地址 - 使用K8s Service名称
+service:
+  account: http://account-service.isbank.svc.cluster.local:8081
+  risk: http://risk-service.isbank.svc.cluster.local:8082
+  ledger: http://ledger-service.isbank.svc.cluster.local:8083
+  notification: http://notification-service.isbank.svc.cluster.local:8084
+

@@ -1,0 +1,57 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: account-service
+          uri: http://account-service.isbank.svc.cluster.local:8081
+          predicates:
+            - Path=/api/account/**
+          filters:
+            - StripPrefix=2
+        - id: risk-service
+          uri: http://risk-service.isbank.svc.cluster.local:8082
+          predicates:
+            - Path=/api/risk/**
+          filters:
+            - StripPrefix=2
+        - id: ledger-service
+          uri: http://ledger-service.isbank.svc.cluster.local:8083
+          predicates:
+            - Path=/api/ledger/**
+          filters:
+            - StripPrefix=2
+        - id: notification-service
+          uri: http://notification-service.isbank.svc.cluster.local:8084
+          predicates:
+            - Path=/api/notification/**
+          filters:
+            - StripPrefix=2
+        - id: transfer-service
+          uri: http://transfer-service.isbank.svc.cluster.local:8085
+          predicates:
+            - Path=/api/transfer/**
+          filters:
+            - StripPrefix=2
+        - id: api-docs
+          uri: http://account-service.isbank.svc.cluster.local:8081
+          predicates:
+            - Path=/doc.html
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server.isbank.svc.cluster.local:8761/eureka/
+  instance:
+    prefer-ip-address: false
+    hostname: ${HOSTNAME}
+    instance-id: ${HOSTNAME}:${spring.application.name}:${server.port}
+

@@ -1,0 +1,41 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: transfer-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/greenbank?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: Zmzzmz010627!
+    # Spring Boot 2.3.x 使用这种方式初始化数据库
+    initialization-mode: always
+    schema: classpath:schema.sql
+    continue-on-error: false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+
+knife4j:
+  enable: true
+
+# 其他服务地址
+service:
+  account: http://localhost:8081
+  risk: http://localhost:8082
+  ledger: http://localhost:8083
+  notification: http://localhost:8084
+
