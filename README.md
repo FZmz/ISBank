@@ -8,7 +8,7 @@
 ![Vue](https://img.shields.io/badge/Vue-3.3.4-green)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-一个完整的微服务银行系统,用于支持混沌工程、故障注入和CI/CD实验研究
+一个完整的微服务银行系统,用于支持混沌工程、故障注入和CI/CD实验研究，由中国科学院大学的jogreen维护
 
 The private small bank of Zhou Green from the University of Chinese Academy of Sciences
 
